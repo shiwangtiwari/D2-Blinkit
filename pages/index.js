@@ -5,15 +5,11 @@ import { THEME_LABELS, THEME_DESCRIPTIONS, THEMES } from '../lib/constants'
 // ── Blinkit wordmark SVG ──────────────────────────────────────────────────────
 function BlinkitWordmark() {
   return (
-    <svg width="108" height="36" viewBox="0 0 108 36" fill="none" xmlns="http://www.w3.org/2000/svg">
-      <path d="M4 4h4v10.2c.9-1 2.1-1.6 3.5-1.6 3.2 0 5.5 2.5 5.5 6.2s-2.3 6.2-5.5 6.2c-1.5 0-2.8-.7-3.6-1.8V24.6H4V4zm7 17.6c1.8 0 3-1.4 3-3.8s-1.2-3.8-3-3.8-3 1.4-3 3.8 1.2 3.8 3 3.8z" fill="#1A1A1A"/>
-      <path d="M20 4h4v20.6h-4V4z" fill="#1A1A1A"/>
-      <path d="M27 7.4a2.4 2.4 0 1 1 4.8 0 2.4 2.4 0 0 1-4.8 0zM27.4 13h4v11.6h-4V13z" fill="#1A1A1A"/>
-      <path d="M35 13h3.8v1.8c.9-1.3 2.3-2.1 4-2.1 2.8 0 4.6 1.9 4.6 5v6.9h-4v-6.3c0-1.6-.8-2.6-2.2-2.6s-2.2 1-2.2 2.6v6.3H35V13z" fill="#1A1A1A"/>
-      <path d="M51 4h4v11.4l4.4-4.4h4.8l-5.2 5 5.6 8.6H60l-3.6-5.8-1.4 1.4v4.4h-4V4z" fill="#1A1A1A"/>
-      <path d="M67 7.4a2.4 2.4 0 1 1 4.8 0 2.4 2.4 0 0 1-4.8 0zM67.4 13h4v11.6h-4V13z" fill="#54B226"/>
-      <path d="M77 9.4V13h3v3h-3v5c0 1 .5 1.5 1.4 1.5.6 0 1.2-.1 1.6-.3v3.1c-.7.3-1.6.5-2.6.5-2.8 0-4.4-1.5-4.4-4.2V16h-2v-3h2V9.4H77z" fill="#54B226"/>
-    </svg>
+    <img
+      src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACQAAAAkCAIAAABuYg/PAAABdmlDQ1BJQ0MgUHJvZmlsZQAAeJylkLFLw0AYxV9bRdFKBx0cHDIUB2lB6uKodShIKaVWsOqSpEkrJG1IUkQcHVw7dFFxsYr/gW7iPyAIgjq56OygIIKU+K4pxKGd/MLd9+PdvcvdA8JNQzWdoXnArLl2IZOWNkqbEv6UrDrWcj6fxcD6ekRI9IekOGvwvr41XtYcFQiNkhdVy3bJS+TcrmsJbpKn1KpcJp+TEzYvSL4XuuLzm+CKz9+C7WJhBQhHyVLF54RgxWfxFkmt2ibZIMdNo6H27iNeEtVq62vsM93hoIAM0pCgoIEdGHCRZK8xs/6+VNeXQ50elbOFPdh0VFClN0G1wVM1dp26xs/gDlaQfZCpoy+k/D9EV4HhV8/7nANGToDOoef9nHlepw1EnoHbVuCvtxjnO/VmoMVPgdgBcHUTaMoFcM2Mp18s2Za7UoQjrOvAxyUwUQImmfXY1n/X/bx762g/AcV9IHsHHB0Ds9wf2/4F9IxzaxM+sS0AAAT2SURBVHic7ZZZbJRVFMf/5y7ffMt80zKlBQoUSqmCggshwSfjkugDIcQFXowG45JAYjQ++KIm7kaNy4PGqBjjQkxAwa2amKhBcIkEIiKgZRFSrC0t7UxnOjPfcu/xwQ52SJ95oefp5Hwn9/fdc8/530vVPTfgfJk4b6Rp2DRsGnb+YcayMTw5Yi0bw5aRGmbGOWYtp6YhbJgtMwNTpUP97zIHWQ2JqJz+l8gM31dQhMTClWY8jRMmOpsO35fQMh5PjAUBBAQZB9bGxnpaW2Nia6eAMbPW9N5nQwPD5p6bWzyHkpRdT+z4pni0L7riIv+LH0buXNN2yWId1VgKWOaMK3u+L/1ycHzjrS35nEpTawiv/v5Xu5e5elb+g8N9185uXpHPJdbWf69eRmYoLbb0nHn+3f6sq9xQhVmhA/3JzjNPv3Oqt6+2a2+5WDZOsxuGyg9V1tc6p3t2jz7xRt9QMXUC4Tc5JMWe4bGjpVrFmGcP/tVbilRGG8vn7gwAGLlAzpqZef2j4Z7dZ7rnu4/f19HSpJoDlc/pqy4LhkfTTQ8fWTgnOHRsrFzhp+5fOHOGDrOqpUnv/Ln8ypb+O9bOvHJ2LmvV20f7O7LBhycGsgpr5rdGiRFEjTBASTrZH235amhuq/Pa1tPViLI+SUl/nqy9tWOwOcxs/brgOsVVy7Nf/liMkxPdCz03Q/v+iDc+c6x7rrPq8vDJXce6An9BmDGMmjGxYcLZKp7bjcj6YttzXdvfvnjj+tnf7hk90R9ltHAU8jmd9YSStGHNzI8/WHbTNfnj/9TGyqmU4sEXT3qO3P7iknxOZEi2ec6mi+dWkuTe7nnru+ZUklTUm6oBJgSkgLEMS8YyEwkppQSIQCCAAT8jbDX2XJKCHEVxyoJsYTzduXfMdSYWLScWQMoMIpq8/iSfKlXbP5je8tDx1RsOv7lt4MZVM1pnyP7hpBbxSDGtRHakmJZrRkhRHLeFkilVeKQYb36069JF3obHju/vjRNhClHapJUn5UuH+jb/0edpaesjN3FmRDAG164Ml3b6nfMzn3438sBt7Y/cO6dn16ifwYol7t1r265c4t21tnXFksCUzXUrw0XtzkUdnuPwsm7nhfs7Xn5/4EBvZX1nm2/UPD/z6PLOz08N5ZQE/783mvwGcZsUBAMChgCLmoUmSEJsoSTYQgsYm5SNDiWkRGyREWkxVlogq1A1iABNJjFSC5AAo1ZNGlqfGUqhWLI/7S/ObtXMdOh4bekily2VxtOF85yB01FXh9c/lChJfYPxgjnOkX3jSQIBam+Vs1qcUjX++3RlVl51ztM/7yvnAtXUJE3KqUFnu5YEbigjkKb46UC1OZeUyiZK8duRZHGHDH3dN1jxXAwVart+LYeeqMRm3fVO74loZMwQi9a8rMXjUsoo4n+Go03r2vYejsYq1TCgUtkGHt2+Ot+Wl0nCRPUyEthYGqvAdagwlkgp45RDT0jJScIGolBIg6wUxAQKPGglBfFoiUMfhbK1lj1XxDHnAsHAmVEzVEw8R2rF3Qsy1lqAGs6MiKUQlqEFGAwia8CwRAKAkqgLDxnLYDBYSTIWUpAAGwYRGcNEEIKkgGUQECUTpAYFYaYkZQDG1OVrosAMIE7PKgHXPYoTAJh0KzERJi6YOmHypDXIVcMENtrUX6aKEgCaOv8CeRZMw6ZhFw7sXyYkbAxKZnu6AAAAAElFTkSuQmCC"
+      alt="Blinkit"
+      style={ height: 36, width: 36, borderRadius: 8, display: 'block' }
+    />
   )
 }
 
