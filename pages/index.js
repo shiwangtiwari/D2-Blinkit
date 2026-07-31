@@ -56,7 +56,7 @@ function TabDataset({ reviews, themeSummary, insightReport }) {
   const total = reviews.length
   const disc = reviews.filter(r => r.discovery_flag === 'yes').length
   const sources = new Set(reviews.map(r => r.source)).size
-  const discPct = total > 0 ? Math.round((disc / total) * 100) + '%' : '0%'
+  const discPct = total > 0 ? ((disc / total) * 100).toFixed(1) + '%' : '0%'
 
   // Build bar chart data sorted desc
   const themeCounts = Object.entries(
