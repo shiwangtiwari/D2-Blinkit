@@ -188,11 +188,28 @@ function TabDataset({ reviews, themeSummary, insightReport }) {
 }
 
 // ── Tab: Try it Live ──────────────────────────────────────────────────────────
+const SAMPLE_REVIEWS = `Blinkit delivers everything I need. I reorder the same groceries every week without thinking.
+Ordered pet food for the first time. Had no idea they even stocked this category.
+Surge charges during rain are ridiculous. Amazon doesn't do this.
+My order was missing two items and customer support did nothing.
+I have never once looked at the banner ads. They blend into the background.
+I only use the reorder button now. Never browse at all.
+Tried a new brand of protein powder. No reviews on the page so I was nervous.
+I didn't know Blinkit sold baby wipes until my friend told me.
+I wanted to try a skincare product but there were no ratings. Went to Nykaa instead.
+Bought coffee for the first time here. Only because it was out of stock on Amazon.
+I never thought of buying cleaning products here. Seems expensive vs Jiomart.
+I ordered the same thing 14 times this year. That says everything.
+Product page had zero description. Just a photo and price. Had to Google the brand.
+Why would I explore new things here? I am not here to shop, I am here to reorder.
+Very fast delivery but the discovery experience is completely broken.`
+
 function TabLive() {
   const [text, setText] = useState('')
   const [loading, setLoading] = useState(false)
   const [results, setResults] = useState(null)
   const [error, setError] = useState('')
+  const [copied, setCopied] = useState(false)
 
   const run = useCallback(async () => {
     const lines = text.split('\n').map(l => l.trim()).filter(l => l.length >= 10).slice(0, 30)
@@ -214,58 +231,123 @@ function TabLive() {
     }
   }, [text])
 
+  const handleCopySample = () => {
+    navigator.clipboard.writeText(SAMPLE_REVIEWS).then(() => {
+      setCopied(true)
+      setTimeout(() => setCopied(false), 2000)
+    })
+  }
+
+  const handleUseSample = () => {
+    setText(SAMPLE_REVIEWS)
+  }
+
   const discCount = results ? results.tags.filter(t => t.discovery_flag === 'yes').length : 0
 
   return (
     <div>
       <div className="section-heading">Classify reviews with Claude</div>
-      <div className="info-box">
-        <div className="info-box-body">
-          Paste up to 30 reviews — one per line — and run the same Claude classification
-          pipeline that processed the full 1,718-item dataset. Each review gets a theme,
-          a sentiment, and a discovery flag.
+
+      <div className="live-layout">
+        {/* Left: input + results */}
+        <div className="live-main">
+          <div className="info-box" style={{ marginBottom: 14 }}>
+            <div className="info-box-body">
+              Paste up to 30 Blinkit reviews — one per line — and run the same Claude
+              classification pipeline that processed the full 1,718-item dataset. Each
+              review gets a theme, a sentiment score, and a discovery flag.
+            </div>
+          </div>
+          <textarea
+            className="live-textarea"
+            value={text}
+            onChange={e => setText(e.target.value)}
+            placeholder="Paste one review per line. Minimum 10 characters each."
+          />
+          <div style={{ display: 'flex', gap: 10, marginTop: 12, alignItems: 'center', flexWrap: 'wrap' }}>
+            <button className="run-btn" onClick={run} disabled={loading}>
+              {loading ? 'Classifying…' : 'Run Classification'}
+            </button>
+            <button className="ghost-btn" onClick={handleUseSample}>
+              Use sample reviews
+            </button>
+          </div>
+
+          {error && <div className="error-box">{error}</div>}
+
+          {results && (
+            <>
+              <table className="result-table">
+                <thead>
+                  <tr>
+                    <th>Review</th>
+                    <th>Theme</th>
+                    <th>Sentiment</th>
+                    <th>Discovery</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {results.tags.map((t, i) => (
+                    <tr key={i}>
+                      <td>{results.lines[t.id]?.slice(0, 120) || ''}…</td>
+                      <td>{THEME_LABELS[t.theme] || t.theme}</td>
+                      <td style={{ textTransform: 'capitalize' }}>{t.sentiment}</td>
+                      <td>{t.discovery_flag === 'yes' ? 'Yes' : 'No'}</td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+              <div className="disc-count-pill">
+                {discCount} of {results.lines.length} reviews flagged as discovery-related
+              </div>
+            </>
+          )}
+        </div>
+
+        {/* Right: instructions panel */}
+        <div className="live-sidebar">
+          <div className="sidebar-block">
+            <div className="sidebar-heading">How to use this</div>
+            <ol className="sidebar-steps">
+              <li>
+                <span className="step-num">1</span>
+                <span>Click <strong>Use sample reviews</strong> below to load 15 real-style Blinkit reviews into the textarea — or paste your own.</span>
+              </li>
+              <li>
+                <span className="step-num">2</span>
+                <span>Each line is treated as one review. Keep them one per line, minimum 10 characters each. Up to 30 reviews per run.</span>
+              </li>
+              <li>
+                <span className="step-num">3</span>
+                <span>Click <strong>Run Classification</strong>. Claude processes every review against the same 10-theme taxonomy used on the full dataset.</span>
+              </li>
+              <li>
+                <span className="step-num">4</span>
+                <span>Results appear as a table: theme, sentiment (positive/neutral/negative), and a discovery flag for any review touching new-category behavior.</span>
+              </li>
+            </ol>
+            <button className="sidebar-copy-btn" onClick={handleCopySample}>
+              {copied ? 'Copied!' : 'Copy sample reviews'}
+            </button>
+          </div>
+
+          <div className="sidebar-block" style={{ marginTop: 16 }}>
+            <div className="sidebar-heading">What the pipeline does</div>
+            <div className="sidebar-note">
+              Your reviews go to a server-side API route that calls Claude with the fixed taxonomy prompt — identical to how 1,718 items were classified. The API key never touches the browser. Results are returned as structured JSON and rendered here.
+            </div>
+          </div>
+
+          <div className="sidebar-block" style={{ marginTop: 16 }}>
+            <div className="sidebar-heading">10 themes Claude assigns</div>
+            <div className="sidebar-tags">
+              {Object.values(THEME_LABELS).map(l => (
+                <span key={l} className="sidebar-tag">{l}</span>
+              ))}
+            </div>
+          </div>
         </div>
       </div>
-      <textarea
-        className="live-textarea"
-        value={text}
-        onChange={e => setText(e.target.value)}
-        placeholder="Paste one review per line. Minimum 10 characters each."
-      />
-      <br />
-      <button className="run-btn" onClick={run} disabled={loading}>
-        {loading ? 'Classifying…' : 'Run Classification'}
-      </button>
-
-      {error && <div className="error-box">{error}</div>}
-
-      {results && (
-        <>
-          <table className="result-table">
-            <thead>
-              <tr>
-                <th>Review</th>
-                <th>Theme</th>
-                <th>Sentiment</th>
-                <th>Discovery</th>
-              </tr>
-            </thead>
-            <tbody>
-              {results.tags.map((t, i) => (
-                <tr key={i}>
-                  <td>{results.lines[t.id]?.slice(0, 120) || ''}…</td>
-                  <td>{THEME_LABELS[t.theme] || t.theme}</td>
-                  <td style={{ textTransform: 'capitalize' }}>{t.sentiment}</td>
-                  <td>{t.discovery_flag === 'yes' ? 'Yes' : 'No'}</td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-          <div className="disc-count-pill">
-            {discCount} of {results.lines.length} reviews flagged as discovery-related
-          </div>
-        </>
-      )}
     </div>
   )
 }
@@ -386,6 +468,28 @@ export default function Home({ reviews, themeSummary, insightReportHtml }) {
           An AI-powered research pipeline that ingests app reviews and community posts,
           classifies every item against a 10-theme taxonomy using Claude,
           and surfaces the insights a growth team needs to drive category expansion.
+        </div>
+
+        {/* Try it Live CTA */}
+        <div className="cta-band">
+          <div className="cta-band-left">
+            <div className="cta-band-label">
+              <span className="cta-pulse" />
+              Live Pipeline
+            </div>
+            <div className="cta-band-heading">Classify your own reviews with Claude</div>
+            <div className="cta-band-body">
+              Paste any Blinkit reviews — one per line — and run the same Claude classification
+              pipeline that processed the full 1,718-item dataset. Every review gets a theme,
+              a sentiment score, and a discovery flag in seconds.
+            </div>
+          </div>
+          <button className="cta-band-btn" onClick={() => setTab(1)}>
+            Try it Live
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" style={{ marginLeft: 8, flexShrink: 0 }}>
+              <line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/>
+            </svg>
+          </button>
         </div>
 
         {/* Tabs */}
