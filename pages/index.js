@@ -129,7 +129,7 @@ function TabDataset({ reviews, themeSummary, insightReport }) {
             <div className="info-box-title">Why discovery items are the smallest theme</div>
             <div className="info-box-body">
               Users never attempt discovery, so they never voice frustration about it.
-              The silence is the signal — not the volume.
+              The silence is the signal not the volume.
             </div>
           </div>
         </div>
@@ -253,7 +253,7 @@ function TabLive() {
         <div className="live-main">
           <div className="info-box" style={{ marginBottom: 14 }}>
             <div className="info-box-body">
-              Paste up to 30 Blinkit reviews — one per line — and run the same Claude
+              Paste up to 30 Blinkit reviews one per line and run the same Claude
               classification pipeline that processed the full 1,718-item dataset. Each
               review gets a theme, a sentiment score, and a discovery flag.
             </div>
@@ -311,7 +311,7 @@ function TabLive() {
             <ol className="sidebar-steps">
               <li>
                 <span className="step-num">1</span>
-                <span>Click <strong>Use sample reviews</strong> below to load 15 real-style Blinkit reviews into the textarea — or paste your own.</span>
+                <span>Click <strong>Use sample reviews</strong> below to load 15 real-style Blinkit reviews into the textarea or paste your own.</span>
               </li>
               <li>
                 <span className="step-num">2</span>
@@ -334,7 +334,7 @@ function TabLive() {
           <div className="sidebar-block" style={{ marginTop: 16 }}>
             <div className="sidebar-heading">What the pipeline does</div>
             <div className="sidebar-note">
-              Your reviews go to a server-side API route that calls Claude with the fixed taxonomy prompt — identical to how 1,718 items were classified. The API key never touches the browser. Results are returned as structured JSON and rendered here.
+              Your reviews go to a server-side API route that calls Claude with the fixed taxonomy prompt identical to how 1,718 items were classified. The API key never touches the browser. Results are returned as structured JSON and rendered here.
             </div>
           </div>
 
@@ -357,7 +357,7 @@ function TabHow() {
   const steps = [
     {
       num: '01', title: 'Ingest',
-      body: 'Play Store reviews via google-play-scraper, App Store reviews via the public iTunes RSS feed, and Reddit threads via public JSON endpoints — deduplicated into one CSV.',
+      body: 'Play Store reviews via google-play-scraper, App Store reviews via the public iTunes RSS feed, and Reddit threads via public JSON endpoints deduplicated into one CSV.',
     },
     {
       num: '02', title: 'Classify',
@@ -392,7 +392,7 @@ function TabHow() {
         <div className="info-box-title">Why a fixed taxonomy instead of open coding</div>
         <div className="info-box-body">
           Open-ended theme generation drifts across batches and inflates theme counts.
-          A fixed taxonomy — drafted after manually reading 200 reviews — keeps tags
+          A fixed taxonomy drafted after manually reading 200 reviews keeps tags
           comparable across thousands of items and makes validation possible. The 10 themes
           cover the complete space of what quick-commerce users talk about, with a catch-all
           for anything that does not fit.
@@ -410,7 +410,7 @@ function TabHow() {
       <div className="info-box">
         <div className="info-box-title">Validation result</div>
         <div className="info-box-body">
-          Human-AI agreement on the 100-item blind sample came in at 81% — above the
+          Human-AI agreement on the 100-item blind sample came in at 81% above the
           75% threshold considered reliable for qualitative coding at this scale.
           Disagreements concentrated in the boundary between service_issue and
           delivery_experience, a known ambiguity documented in the taxonomy.
@@ -424,11 +424,11 @@ function TabHow() {
 function TabThemes() {
   return (
     <div>
-      <div className="section-heading">Classification Taxonomy — 10 Themes</div>
+      <div className="section-heading">Classification Taxonomy 10 Themes</div>
       <div className="info-box" style={{ marginBottom: 20 }}>
         <div className="info-box-body">
           Each review is assigned exactly one theme. The taxonomy was built after manually
-          reading 200 reviews to identify recurring patterns. Theme keys are fixed — the
+          reading 200 reviews to identify recurring patterns. Theme keys are fixed the
           Claude prompt references them by name to keep classification consistent across batches.
         </div>
       </div>
@@ -479,7 +479,7 @@ export default function Home({ reviews, themeSummary, insightReportHtml }) {
             </div>
             <div className="cta-band-heading">Classify your own reviews with Claude</div>
             <div className="cta-band-body">
-              Paste any Blinkit reviews — one per line — and run the same Claude classification
+              Paste any Blinkit reviews one per line and run the same Claude classification
               pipeline that processed the full 1,718-item dataset. Every review gets a theme,
               a sentiment score, and a discovery flag in seconds.
             </div>
