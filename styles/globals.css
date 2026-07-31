@@ -129,7 +129,7 @@ html, body {
 .run-btn {
   background: #1C1C1C; color: #fff; border: none; border-radius: 8px;
   padding: 10px 24px; font-size: 13.5px; font-weight: 700; cursor: pointer;
-  font-family: 'Inter', sans-serif; margin-top: 12px; letter-spacing: 0.2px;
+  font-family: 'Inter', sans-serif; letter-spacing: 0.2px;
 }
 .run-btn:hover { background: #2d2d2d; }
 .run-btn:disabled { background: #888; cursor: not-allowed; }
